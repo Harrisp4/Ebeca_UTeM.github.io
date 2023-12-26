@@ -59,6 +59,7 @@ dataRef2.on('value', function (getdata2) {
 
 dataRef3.on('value', function (getdata3) {
     var vol = getdata3.val();
+    updatechart(vol);
     var percentage = vol/8.4 * 100;
     document.getElementById('voltage').innerHTML = percentage.toFixed(2) + "%";
 })
@@ -70,12 +71,12 @@ dataRef4.on('value', function (getdata4) {
 
 
 //-------CHARTS--------//
-//generate line chart
+//generate voltage line chart
 
 //getting server time from firebase
 var serverTimeRef = firebase.database().ref('/.info/serverTimeOffset');
 
-function updatechart(data1) {
+function updatechart(vol) {
     serverTimeRef.on('value', function (snapshot) {
         var serverTime = snapshot.val();
         // Convert the server time to a Date object
@@ -86,7 +87,7 @@ function updatechart(data1) {
 
         // Update the chart data
         voltageLevelChart.data.labels.push(timestamp);
-        voltageLevelChart.data.datasets[0].data.push(data1);
+        voltageLevelChart.data.datasets[0].data.push(vol);
 
         // Limit the number of data points displayed on the chart
         const maxDataPoints = 10;
@@ -98,12 +99,6 @@ function updatechart(data1) {
         voltageLevelChart.update();
     });
 }
-
-// Get voltage level from firebase
-firebase.database().ref('Variable/Voltage').on('value', function (snapshot) {
-    var data1 = snapshot.val();
-    updatechart(data1);
-});
 
 // Create a chart using Chart.js
 var ctx = document.getElementById('voltageLevelChart').getContext('2d');
@@ -188,7 +183,7 @@ var currentLevelChart = new Chart(ctx, {
             }],
             y: {
                 min: 0,
-                max: 100,
+                max: 40,
                 ticks: {
                     beginAtZero: true,
                 }
