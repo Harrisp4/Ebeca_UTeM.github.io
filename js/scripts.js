@@ -135,6 +135,8 @@ var voltageLevelChart = new Chart(ctx, {
 });
 
 //---current level chart
+var serverTimeRef1 = firebase.database().ref('/.info/serverTimeOffset');
+
 // Get voltage level from firebase
 firebase.database().ref('Variable/OutC').on('value', function (snapshot) {
     var data2 = snapshot.val();
@@ -142,7 +144,7 @@ firebase.database().ref('Variable/OutC').on('value', function (snapshot) {
 });
 
 function updatechart2(data2) {
-    serverTimeRef.on('value', function (snapshot) {
+    serverTimeRef1.on('value', function (snapshot) {
         var serverTime = snapshot.val();
         // Convert the server time to a Date object
         var epoch = Date.now(serverTime);
