@@ -136,14 +136,39 @@ var voltageLevelChart = new Chart(ctx, {
 
 //---current level chart
 // Get voltage level from firebase
-firebase.database().ref('Variable/Out').on('value', function (snapshot) {
-    var data1 = snapshot.val();
-    updatechart(data1);
+firebase.database().ref('Variable/OutC').on('value', function (snapshot) {
+    var data2 = snapshot.val();
+    updatechart2(data2);
 });
+
+function updatechart2(data2) {
+    serverTimeRef.on('value', function (snapshot) {
+        var serverTime = snapshot.val();
+        // Convert the server time to a Date object
+        var epoch = Date.now(serverTime);
+        var timestamp = new Date(epoch);
+        timestamp = timestamp.getHours() + ":" + timestamp.getMinutes() + ":" + timestamp.getSeconds();
+        // Update your voltage level chart using the new server time
+
+        // Update the chart data
+        currentLevelChart.data.labels.push(timestamp);
+        currentLevelChart.data.datasets[0].data.push(data2);
+
+        // Limit the number of data points displayed on the chart
+        const maxDataPoints = 10;
+        if (currentLevelChart.data.labels.length > maxDataPoints) {
+            currentLevelChart.data.labels.shift();
+            currentLevelChart.data.datasets[0].data.shift();
+        }
+        // Redraw the chart
+        currentLevelChart.update();
+    });
+}
+
 
 // Create a chart using Chart.js
 var ctx = document.getElementById('currentLevelChart').getContext('2d');
-var voltageLevelChart = new Chart(ctx, {
+var currentLevelChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: [],
