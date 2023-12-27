@@ -14,6 +14,9 @@
         <!--Custom CSS-->
         <link rel="stylesheet" href="css/styles.css">
 
+        <!--manifest-->
+        <link rel="manifest" href="manifest.json" />
+
         <!--Firebase-->
         <!--Firebase configuration-->
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -137,6 +140,12 @@
         </div>
 
         <!--Scripts-->
+        <!--serviceWorker-->
+        <script>
+            if('serviceWorker' in navigator){
+                navigator.serviceWorker.register('js/service-worker.js');
+            }
+        </script>
         <!--ApexCharts-->
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <!---Google chart-->
