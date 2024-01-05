@@ -60,7 +60,7 @@ dataRef2.on('value', function (getdata2) {
 dataRef3.on('value', function (getdata3) {
     var vol = getdata3.val();
     updatechart(vol);
-    var percentage = vol/8.4 * 100;
+    calculateBatteryPercentage(vol);
     document.getElementById('voltage').innerHTML = percentage.toFixed(2) + "%";
 })
 
@@ -69,6 +69,26 @@ dataRef4.on('value', function (getdata4) {
     document.getElementById('speed').innerHTML = speed + "km/h";
 })
 
+
+//----battery percentage----//
+function calculateBatteryPercentage(vol) {
+    // Define voltage ranges and their corresponding percentage values
+    const voltageRanges = [53, 50.8, 48.6, 46.4, 44.2, 43.1, 42.1];
+    const percentageValues = [100, 80, 60, 40, 20, 10, 0];
+
+    // Find the appropriate percentage based on the provided voltage
+    for (let i = 0; i < voltageRanges.length; i++) {
+        if (vol >= voltageRanges[i]) {
+            return percentageValues[i];
+        }
+    }
+
+    // If voltage is below the lowest range, return 0%
+    return 0;
+}
+
+const batteryPercentage = calculateBatteryPercentage();
+document.getElementById('batteryPercentageDisplay').innerText += `${batteryPercentage}%`;
 
 //-------CHARTS--------//
 //generate voltage line chart
@@ -120,7 +140,7 @@ var voltageLevelChart = new Chart(ctx, {
             }],
             y: {
                 min: 0,
-                max: 10,
+                max: 60,
                 ticks: {
                     beginAtZero: true,
                 }
