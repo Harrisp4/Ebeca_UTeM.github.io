@@ -60,8 +60,8 @@ dataRef2.on('value', function (getdata2) {
 dataRef3.on('value', function (getdata3) {
     var vol = getdata3.val();
     updatechart(vol);
-    calculateBatteryPercentage(vol);
-    document.getElementById('voltage').innerHTML = percentage.toFixed(2) + "%";
+    const batteryPercentage = calculateBatteryPercentage(vol);
+    document.getElementById('batteryPercentageDisplay').innerText += `${batteryPercentage}%`;
 })
 
 dataRef4.on('value', function (getdata4) {
@@ -73,8 +73,8 @@ dataRef4.on('value', function (getdata4) {
 //----battery percentage----//
 function calculateBatteryPercentage(vol) {
     // Define voltage ranges and their corresponding percentage values
-    const voltageRanges = [53, 50.8, 48.6, 46.4, 44.2, 43.1, 42.1];
-    const percentageValues = [100, 80, 60, 40, 20, 10, 0];
+    const voltageRanges = [53.6, 53.2, 52.8, 52.4, 52, 51.6, 51.2,50.0,48,40];
+    const percentageValues = [100, 90, 70, 40, 30, 20, 10, 17, 14, 9,0];
 
     // Find the appropriate percentage based on the provided voltage
     for (let i = 0; i < voltageRanges.length; i++) {
@@ -85,10 +85,8 @@ function calculateBatteryPercentage(vol) {
 
     // If voltage is below the lowest range, return 0%
     return 0;
-}
 
-const batteryPercentage = calculateBatteryPercentage();
-document.getElementById('batteryPercentageDisplay').innerText += `${batteryPercentage}%`;
+}
 
 //-------CHARTS--------//
 //generate voltage line chart
