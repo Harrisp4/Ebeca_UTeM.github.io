@@ -60,7 +60,7 @@ dataRef2.on('value', function (getdata2) {
 dataRef3.on('value', function (getdata3) {
     var vol = getdata3.val();
     updatechart(vol);
-    const batteryPercentage = calculateBatteryPercentage(vol);
+    var batteryPercentage = calculateBatteryPercentage(vol);
     document.getElementById('batteryPercentageDisplay').innerHTML = batteryPercentage + "%";
 })
 
