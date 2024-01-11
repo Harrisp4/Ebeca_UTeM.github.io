@@ -74,7 +74,7 @@ dataRef4.on('value', function (getdata4) {
 function calculateBatteryPercentage(vol) {
     // Define voltage ranges and their corresponding percentage values
     const voltageRanges = [53.6, 53.2, 52.8, 52.4, 52, 51.6, 51.2,50.0,48,40];
-    const percentageValues = [100, 90, 70, 40, 30, 20, 10, 17, 14, 9,0];
+    const percentageValues = [100, 90, 70, 40, 30, 20, 17, 14, 9,0];
 
     // Find the appropriate percentage based on the provided voltage
     for (let i = 0; i < voltageRanges.length; i++) {
